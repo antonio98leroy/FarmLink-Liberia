@@ -1,7 +1,7 @@
 .farm-page {
   width: min(1280px, calc(100% - 32px));
   margin: 0 auto;
-  padding: 20px 0 80px;
+  padding: 24px 0 80px;
 }
 
 .topbar,
@@ -11,6 +11,8 @@
 .buyer-section,
 .how-it-works,
 .producer-section,
+.testimonial-section,
+.highlight-strip,
 .cta-banner {
   width: 100%;
 }
@@ -110,7 +112,7 @@
   display: grid;
   grid-template-columns: 1.3fr 0.7fr;
   gap: 28px;
-  padding: 26px 8px 18px;
+  padding: 26px 8px 12px;
   align-items: center;
 }
 
@@ -132,12 +134,12 @@
 
 .dark {
   background: rgba(255, 255, 255, 0.12);
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(255, 255, 255, 0.92);
 }
 
 .hero-copy h1 {
   margin: 18px 0 16px;
-  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-size: clamp(2.6rem, 5vw, 4.8rem);
   line-height: 1.05;
   color: #152f1f;
   letter-spacing: -0.06em;
@@ -167,6 +169,25 @@
   font-weight: 600;
 }
 
+.category-ribbon {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 26px;
+}
+
+.category-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  background: #effaf3;
+  border: 1px solid rgba(18, 52, 42, 0.08);
+  border-radius: 999px;
+  color: #1d4f3c;
+  font-weight: 700;
+}
+
 .hero-panel {
   padding: 18px;
   border-radius: 28px;
@@ -184,7 +205,9 @@
 .buyer-card,
 .step-item,
 .producer-card,
-.cart-panel {
+.cart-panel,
+.highlight-box,
+.testimonial-card {
   background: #fff;
   border: 1px solid rgba(18, 52, 42, 0.08);
   border-radius: 22px;
@@ -282,6 +305,43 @@
   font-size: 0.92rem;
 }
 
+.highlight-strip {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  padding: 24px 8px 10px;
+}
+
+.highlight-box {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 20px;
+}
+
+.highlight-icon {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: #edfdf5;
+  font-size: 1.7rem;
+}
+
+.highlight-box h3,
+.testimonial-card strong {
+  margin: 0;
+  color: #153327;
+}
+
+.highlight-box p,
+.testimonial-card p,
+.testimonial-author span {
+  margin: 4px 0 0;
+  color: #587067;
+}
+
 .section-heading {
   display: flex;
   justify-content: space-between;
@@ -297,7 +357,7 @@
 }
 
 .narrow {
-  margin-top: 76px;
+  margin-top: 72px;
 }
 
 .search-box {
@@ -382,7 +442,8 @@
 .cart-item,
 .cart-header,
 .totals > div,
-.producer-footer {
+.producer-footer,
+.testimonial-author {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -553,7 +614,8 @@
 
 .buyer-cards,
 .steps-grid,
-.producer-grid {
+.producer-grid,
+.testimonial-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 22px;
@@ -561,7 +623,8 @@
 
 .buyer-card,
 .step-item,
-.producer-card {
+.producer-card,
+.testimonial-card {
   padding: 22px 20px;
 }
 
@@ -629,6 +692,26 @@
   color: #0a684a;
 }
 
+.stars {
+  color: #f5b942;
+  letter-spacing: 0.1em;
+  margin-bottom: 14px;
+}
+
+.testimonial-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 220px;
+}
+
+.testimonial-author {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 18px;
+}
+
 .cta-banner {
   display: flex;
   align-items: center;
@@ -662,7 +745,13 @@
   .section-heading,
   .cta-banner,
   .hero-section,
-  .catalog-layout {
+  .catalog-layout,
+  .highlight-strip,
+  .buyer-cards,
+  .steps-grid,
+  .producer-grid,
+  .testimonial-grid,
+  .stats-band {
     grid-template-columns: 1fr;
     flex-direction: column;
     align-items: stretch;
@@ -681,14 +770,6 @@
   .hero-section,
   .catalog-layout {
     display: grid;
-  }
-
-  .product-grid,
-  .buyer-cards,
-  .steps-grid,
-  .producer-grid,
-  .stats-band {
-    grid-template-columns: 1fr;
   }
 
   .cta-banner {

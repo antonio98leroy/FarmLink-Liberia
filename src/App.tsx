@@ -129,6 +129,37 @@ const producerSpotlights = [
   { name: 'Farm Fresh Liberia', location: 'Grand Cape Mount', speciality: 'Cocoa & spices', status: 'Bulk ready' },
 ]
 
+const featuredCategories = [
+  { name: 'Rice & staples', icon: '🌾' },
+  { name: 'Fresh vegetables', icon: '🥬' },
+  { name: 'Seafood', icon: '🐟' },
+  { name: 'Palm oil', icon: '🫒' },
+]
+
+const marketHighlights = [
+  { title: 'Same-day delivery', value: 'Monrovia city hubs', icon: '🚚' },
+  { title: 'Low-risk sourcing', value: 'Verified farmer profiles', icon: '✅' },
+  { title: 'Bulk ordering', value: 'Ideal for hotels & shops', icon: '📦' },
+]
+
+const testimonials = [
+  {
+    name: 'Mary Doe',
+    role: 'Restaurant owner',
+    quote: 'FarmLink helped us replace unreliable suppliers with a steady source of vegetables and protein.',
+  },
+  {
+    name: 'James Kpan',
+    role: 'Retail buyer',
+    quote: 'The ordering flow is simple, transparent, and the delivery schedule is consistent every week.',
+  },
+  {
+    name: 'Aunty Korkor',
+    role: 'Household buyer',
+    quote: 'I can order fresh food directly from local farmers without worrying about quality or price surprises.',
+  },
+]
+
 const steps = [
   'Browse trusted farms and local products.',
   'Select volume, place your order directly.',
@@ -210,8 +241,12 @@ function App() {
             </p>
 
             <div className="hero-actions">
-              <button type="button" className="primary-btn">Shop fresh produce</button>
-              <button type="button" className="secondary-btn">Become a supplier</button>
+              <button type="button" className="primary-btn">
+                Shop fresh produce
+              </button>
+              <button type="button" className="secondary-btn">
+                Become a supplier
+              </button>
             </div>
 
             <div className="trust-row">
@@ -219,10 +254,19 @@ function App() {
               <span>Fast order updates</span>
               <span>Secure payments</span>
             </div>
+
+            <div className="category-ribbon" aria-label="Featured categories">
+              {featuredCategories.map((category) => (
+                <div key={category.name} className="category-pill">
+                  <span aria-hidden="true">{category.icon}</span>
+                  <span>{category.name}</span>
+                </div>
+              ))}
+            </div>
           </div>
 
           <div className="hero-panel">
-            <div className="mini-card weather-card">
+            <div className="mini-card">
               <span className="mini-label">Harvest forecast</span>
               <strong>76% harvest readiness</strong>
               <small>Across 12 counties</small>
@@ -258,6 +302,18 @@ function App() {
             <div key={stat.label} className="stat-item">
               <strong>{stat.value}</strong>
               <span>{stat.label}</span>
+            </div>
+          ))}
+        </section>
+
+        <section className="highlight-strip">
+          {marketHighlights.map((item) => (
+            <div key={item.title} className="highlight-box">
+              <span className="highlight-icon" aria-hidden="true">{item.icon}</span>
+              <div>
+                <h3>{item.title}</h3>
+                <p>{item.value}</p>
+              </div>
             </div>
           ))}
         </section>
@@ -399,7 +455,9 @@ function App() {
           <div className="buyer-cards">
             {buyerProfiles.map((buyer) => (
               <article key={buyer.title} className="buyer-card">
-                <div className="buyer-icon" aria-hidden="true">{buyer.accent}</div>
+                <div className="buyer-icon" aria-hidden="true">
+                  {buyer.accent}
+                </div>
                 <h3>{buyer.title}</h3>
                 <p>{buyer.description}</p>
               </article>
@@ -436,7 +494,9 @@ function App() {
           <div className="producer-grid">
             {producerSpotlights.map((producer) => (
               <article key={producer.name} className="producer-card">
-                <div className="producer-avatar" aria-hidden="true">🌱</div>
+                <div className="producer-avatar" aria-hidden="true">
+                  🌱
+                </div>
                 <div>
                   <h3>{producer.name}</h3>
                   <p>{producer.location}</p>
@@ -449,6 +509,30 @@ function App() {
             ))}
           </div>
         </section>
+
+        <section className="testimonial-section">
+          <div className="section-heading narrow">
+            <div>
+              <span className="eyebrow">Buyer stories</span>
+              <h2>Trusted by homes, kitchens and stores</h2>
+            </div>
+          </div>
+
+          <div className="testimonial-grid">
+            {testimonials.map((item) => (
+              <article key={item.name} className="testimonial-card">
+                <div className="stars" aria-label="Five star review">
+                  ★★★★★
+                </div>
+                <p>“{item.quote}”</p>
+                <div className="testimonial-author">
+                  <strong>{item.name}</strong>
+                  <span>{item.role}</span>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
       </main>
 
       <footer className="cta-banner">
@@ -456,7 +540,9 @@ function App() {
           <span className="eyebrow dark">Ready to source smarter?</span>
           <h2>Make buying direct from Liberian farms easier.</h2>
         </div>
-        <button type="button" className="primary-btn">Start ordering</button>
+        <button type="button" className="primary-btn">
+          Start ordering
+        </button>
       </footer>
     </div>
   )
