@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useState, type FormEvent } from 'react'
 import './App.css'
 
 type Product = {
@@ -172,10 +172,10 @@ const supportChannels = [
   {
     title: 'Facebook',
     handle: 'FarmLink Liberia',
-    description: 'Follow updates and customer support',
+    description: 'Facebook page coming soon',
     icon: 'f',
     accent: 'facebook',
-    url: 'https://www.facebook.com/',
+    url: null,
   },
   {
     title: 'Messenger',
@@ -216,6 +216,45 @@ function App() {
   const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0)
   const totalValue = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0)
 
+  const sendWhatsAppMessage = (message: string) => {
+    const url = `https://wa.me/231880010773?text=${encodeURIComponent(message)}`
+    window.open(url, '_blank', 'noopener,noreferrer')
+  }
+
+  const submitOrderRequest = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    if (cartItems.length === 0) return
+
+    const form = new FormData(event.currentTarget)
+    const message = [
+      'Hello FarmLink Liberia, I would like to request this order:',
+      ...cartItems.map((item) => `- ${item.quantity} x ${item.name} (${item.unit}) - LRD ${(item.price * item.quantity).toLocaleString()}`),
+      `Subtotal: LRD ${totalValue.toLocaleString()}`,
+      'Estimated delivery: LRD 650',
+      `Estimated total: LRD ${(totalValue + 650).toLocaleString()}`,
+      `Name: ${form.get('name')}`,
+      `Phone: ${form.get('phone')}`,
+      `Delivery location: ${form.get('location')}`,
+      `Delivery notes: ${form.get('notes') || 'None'}`,
+    ].join('\n')
+
+    sendWhatsAppMessage(message)
+  }
+
+  const submitSupportRequest = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    const form = new FormData(event.currentTarget)
+    const message = [
+      'Hello FarmLink Liberia, I need customer support.',
+      `Name: ${form.get('name')}`,
+      `Phone: ${form.get('phone')}`,
+      `Topic: ${form.get('topic')}`,
+      `Message: ${form.get('message')}`,
+    ].join('\n')
+
+    sendWhatsAppMessage(message)
+  }
+
   const addToCart = (product: Product) => {
     setCart((current) => ({
       ...current,
@@ -247,9 +286,11 @@ function App() {
 
         <nav className="nav-links" aria-label="Main navigation">
           <a href="#market">Marketplace</a>
+          <a href="#order-request">Order</a>
           <a href="#buyers">Buyers</a>
           <a href="#suppliers">Suppliers</a>
           <a href="#about">About</a>
+          <a href="#contact">Support</a>
         </nav>
 
         <button type="button" className="nav-cta">
@@ -268,7 +309,7 @@ function App() {
             </p>
 
             <div className="hero-actions">
-              <button type="button" className="primary-btn">
+              <button type="button" className="primary-btn" onClick={() => document.getElementById('market')?.scrollIntoView({ behavior: 'smooth' })}>
                 Shop fresh produce
               </button>
               <button type="button" className="secondary-btn">
@@ -464,9 +505,76 @@ function App() {
                 </div>
               </div>
 
-              <button type="button" className="checkout-btn">
+              <button
+                type="button"
+                className="checkout-btn"
+                onClick={() => document.getElementById('order-request')?.scrollIntoView({ behavior: 'smooth' })}
+              >
                 Place direct order
               </button>
+            </aside>
+          </div>
+        </section>
+
+        <section className="order-request-section" id="order-request">
+          <div className="section-heading narrow">
+            <div>
+              <span className="eyebrow">Order request</span>
+              <h2>Tell us where to deliver your fresh order</h2>
+            </div>
+            <p className="section-intro">Your request opens in WhatsApp with your basket and delivery details ready to send.</p>
+          </div>
+
+          <div className="order-request-layout">
+            <form className="request-form" onSubmit={submitOrderRequest}>
+              <div className="form-heading">
+                <h3>Delivery details</h3>
+                <span>We will confirm availability and final delivery cost.</span>
+              </div>
+              <div className="form-grid">
+                <label className="form-field">
+                  <span>Full name</span>
+                  <input name="name" autoComplete="name" required />
+                </label>
+                <label className="form-field">
+                  <span>Phone number</span>
+                  <input name="phone" type="tel" autoComplete="tel" required />
+                </label>
+                <label className="form-field form-field-wide">
+                  <span>Delivery location</span>
+                  <input name="location" placeholder="Community, city or county" autoComplete="street-address" required />
+                </label>
+                <label className="form-field form-field-wide">
+                  <span>Delivery notes <small>(optional)</small></span>
+                  <textarea name="notes" rows={3} placeholder="Landmarks, preferred time, or other instructions" />
+                </label>
+              </div>
+              <button type="submit" className="primary-btn" disabled={cartItems.length === 0}>
+                Continue to WhatsApp
+              </button>
+              {cartItems.length === 0 && <p className="form-note">Add items from the marketplace before submitting an order request.</p>}
+            </form>
+
+            <aside className="request-summary">
+              <div className="form-heading">
+                <h3>Your basket</h3>
+                <span>{totalItems} items selected</span>
+              </div>
+              {cartItems.length > 0 ? (
+                <ul className="request-items">
+                  {cartItems.map((item) => (
+                    <li key={item.id}>
+                      <span>{item.quantity} x {item.name}</span>
+                      <strong>LRD {(item.price * item.quantity).toLocaleString()}</strong>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="request-empty">Your basket is empty. <a href="#market">Browse the marketplace</a> to add products.</p>
+              )}
+              <div className="request-total"><span>Subtotal</span><strong>LRD {totalValue.toLocaleString()}</strong></div>
+              <div className="request-total"><span>Estimated delivery</span><strong>LRD 650</strong></div>
+              <div className="request-total request-grand-total"><span>Estimated total</span><strong>LRD {(totalValue + 650).toLocaleString()}</strong></div>
             </aside>
           </div>
         </section>
@@ -561,7 +669,7 @@ function App() {
           </div>
         </section>
 
-        <section className="contact-section" aria-label="Customer support">
+        <section className="contact-section" id="contact" aria-label="Customer support">
           <div className="section-heading narrow">
             <div>
               <span className="eyebrow">Customer service</span>
@@ -578,23 +686,60 @@ function App() {
           </div>
 
           <div className="contact-grid">
-            {supportChannels.map((channel) => (
-              <a
-                key={channel.title}
-                href={channel.url}
-                className={`contact-card ${channel.accent}`}
-                target="_blank"
-                rel="noreferrer"
-              >
-                <div className="contact-icon" aria-hidden="true">{channel.icon}</div>
-                <div className="contact-copy">
-                  <span>{channel.title}</span>
-                  <strong>{channel.handle}</strong>
-                  <small>{channel.description}</small>
+            {supportChannels.map((channel) => {
+              const content = (
+                <>
+                  <div className="contact-icon" aria-hidden="true">{channel.icon}</div>
+                  <div className="contact-copy">
+                    <span>{channel.title}</span>
+                    <strong>{channel.handle}</strong>
+                    <small>{channel.description}</small>
+                  </div>
+                </>
+              )
+
+              return channel.url ? (
+                <a key={channel.title} href={channel.url} className={`contact-card ${channel.accent}`} target="_blank" rel="noreferrer">
+                  {content}
+                </a>
+              ) : (
+                <div key={channel.title} className={`contact-card ${channel.accent} unavailable`} aria-disabled="true">
+                  {content}
                 </div>
-              </a>
-            ))}
+              )
+            })}
           </div>
+
+          <form className="request-form support-form" onSubmit={submitSupportRequest}>
+            <div className="form-heading">
+              <h3>Send a customer service inquiry</h3>
+              <span>Our team is available around the clock on WhatsApp.</span>
+            </div>
+            <div className="form-grid">
+              <label className="form-field">
+                <span>Full name</span>
+                <input name="name" autoComplete="name" required />
+              </label>
+              <label className="form-field">
+                <span>Phone number</span>
+                <input name="phone" type="tel" autoComplete="tel" required />
+              </label>
+              <label className="form-field form-field-wide">
+                <span>What do you need help with?</span>
+                <select name="topic" defaultValue="Order or delivery" required>
+                  <option>Order or delivery</option>
+                  <option>Product availability</option>
+                  <option>Become a supplier</option>
+                  <option>Other question</option>
+                </select>
+              </label>
+              <label className="form-field form-field-wide">
+                <span>Message</span>
+                <textarea name="message" rows={4} required />
+              </label>
+            </div>
+            <button type="submit" className="primary-btn">Send inquiry on WhatsApp</button>
+          </form>
         </section>
       </main>
 
@@ -603,9 +748,9 @@ function App() {
           <span className="eyebrow dark">Ready to source smarter?</span>
           <h2>Make buying direct from Liberian farms easier.</h2>
         </div>
-        <button type="button" className="primary-btn">
+        <a href="#order-request" className="primary-btn cta-order-link">
           Start ordering
-        </button>
+        </a>
       </footer>
     </div>
   )
