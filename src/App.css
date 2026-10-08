@@ -342,6 +342,119 @@
   color: #587067;
 }
 
+.contact-section {
+  margin-top: 26px;
+}
+
+.support-banner {
+  background: linear-gradient(135deg, #f1fff7, #ecf7ef);
+  border: 1px solid rgba(18, 52, 42, 0.08);
+  border-radius: 24px;
+  padding: 22px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.support-badge {
+  margin: 0 0 8px;
+  color: #0e6f4c;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.support-banner h3 {
+  margin: 0;
+  color: #123125;
+  font-size: clamp(1.5rem, 2vw, 2.1rem);
+}
+
+.support-pill {
+  background: #143d2e;
+  color: #fff;
+  border-radius: 999px;
+  padding: 10px 16px;
+  font-weight: 700;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+  margin-top: 24px;
+}
+
+.contact-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 20px;
+  border-radius: 22px;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: 1px solid rgba(18, 52, 42, 0.08);
+  background: #fff;
+}
+
+.contact-card.whatsapp {
+  box-shadow: 0 10px 24px rgba(37, 211, 102, 0.12);
+}
+
+.contact-card.facebook {
+  box-shadow: 0 10px 24px rgba(24, 119, 242, 0.1);
+}
+
+.contact-card.messenger {
+  box-shadow: 0 10px 24px rgba(0, 132, 255, 0.1);
+}
+
+.contact-icon {
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  border-radius: 18px;
+  font-size: 1.7rem;
+  font-weight: 800;
+  background: #edfdf5;
+}
+
+.contact-card.facebook .contact-icon {
+  background: #eef5ff;
+  color: #1d5eee;
+}
+
+.contact-card.messenger .contact-icon {
+  background: #edf6ff;
+  color: #0078ff;
+}
+
+.contact-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.contact-copy span {
+  color: #587067;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.contact-copy strong {
+  color: #143527;
+  font-size: 1.08rem;
+}
+
+.contact-copy small {
+  color: #5f7369;
+}
+
 .section-heading {
   display: flex;
   justify-content: space-between;
@@ -736,7 +849,8 @@
 .filter-btn:hover,
 .add-btn:hover,
 .checkout-btn:hover,
-.quantity-controls button:hover {
+.quantity-controls button:hover,
+.contact-card:hover {
   transform: translateY(-1px);
 }
 
@@ -751,7 +865,8 @@
   .steps-grid,
   .producer-grid,
   .testimonial-grid,
-  .stats-band {
+  .stats-band,
+  .contact-grid {
     grid-template-columns: 1fr;
     flex-direction: column;
     align-items: stretch;
@@ -759,7 +874,8 @@
 
   .topbar,
   .section-heading,
-  .cta-banner {
+  .cta-banner,
+  .support-banner {
     display: flex;
   }
 

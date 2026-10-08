@@ -160,6 +160,33 @@ const testimonials = [
   },
 ]
 
+const supportChannels = [
+  {
+    title: 'WhatsApp',
+    handle: '+231 88 001 0773',
+    description: 'Direct order and delivery support',
+    icon: '💬',
+    accent: 'whatsapp',
+    url: 'https://wa.me/231880010773?text=Hello%20FarmLink%20Liberia%2C%20I%20need%20help%20with%20an%20order.',
+  },
+  {
+    title: 'Facebook',
+    handle: 'FarmLink Liberia',
+    description: 'Follow updates and customer support',
+    icon: 'f',
+    accent: 'facebook',
+    url: 'https://www.facebook.com/',
+  },
+  {
+    title: 'Messenger',
+    handle: 'Chat with us online',
+    description: 'Fast 24/7 messaging with the team',
+    icon: '✉️',
+    accent: 'messenger',
+    url: 'https://m.me/FarmLinkLiberia',
+  },
+]
+
 const steps = [
   'Browse trusted farms and local products.',
   'Select volume, place your order directly.',
@@ -530,6 +557,42 @@ function App() {
                   <span>{item.role}</span>
                 </div>
               </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="contact-section" aria-label="Customer support">
+          <div className="section-heading narrow">
+            <div>
+              <span className="eyebrow">Customer service</span>
+              <h2>We are here to help 24/7</h2>
+            </div>
+          </div>
+
+          <div className="support-banner">
+            <div>
+              <p className="support-badge">Always available</p>
+              <h3>Need help with an order or delivery?</h3>
+            </div>
+            <div className="support-pill">24/7 response</div>
+          </div>
+
+          <div className="contact-grid">
+            {supportChannels.map((channel) => (
+              <a
+                key={channel.title}
+                href={channel.url}
+                className={`contact-card ${channel.accent}`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <div className="contact-icon" aria-hidden="true">{channel.icon}</div>
+                <div className="contact-copy">
+                  <span>{channel.title}</span>
+                  <strong>{channel.handle}</strong>
+                  <small>{channel.description}</small>
+                </div>
+              </a>
             ))}
           </div>
         </section>
